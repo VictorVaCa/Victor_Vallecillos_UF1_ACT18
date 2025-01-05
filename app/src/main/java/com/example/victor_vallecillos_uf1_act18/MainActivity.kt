@@ -32,7 +32,11 @@ class MainActivity : AppCompatActivity() {
 
         buttonCheckout.setOnClickListener {
             val intent = Intent(this, SummaryActivity::class.java)
-            intent.putExtra("products", products.filter { it.quantity > 0 } as ArrayList<Product>)
+            val selectedProducts = products.filter { it.quantity > 0 }
+            intent.putExtra("productNames", selectedProducts.map { it.name }.toTypedArray())
+            intent.putExtra("productQuantities", selectedProducts.map { it.quantity }.toIntArray())
+            intent.putExtra("productPrices", selectedProducts.map { it.price }.toDoubleArray())
+            intent.putExtra("productImageIds", selectedProducts.map { it.imageResId }.toIntArray())
             startActivity(intent)
         }
 
@@ -44,3 +48,5 @@ class MainActivity : AppCompatActivity() {
         textViewTotal.text = "Total: €%.2f".format(total)
     }
 }
+
+
